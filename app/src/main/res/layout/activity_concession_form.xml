@@ -90,6 +90,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/rgValI"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="17dp"
@@ -97,6 +98,7 @@
                         android:textSize="18sp" />
 
                     <RadioButton
+                        android:id="@+id/rgValII"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="17dp"
@@ -224,7 +226,7 @@
                         android:id="@+id/spinnerDestination"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:entries="@array/Destination"
+                        android:entries="@array/destination"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:layout_gravity="center"/>

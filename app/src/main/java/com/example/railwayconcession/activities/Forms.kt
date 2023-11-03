@@ -5,10 +5,12 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isNotEmpty
 import com.example.railwayconcession.R
 import com.example.railwayconcession.databinding.FragmentPersonalFormBinding
 import com.example.railwayconcession.model.Users
@@ -104,6 +106,7 @@ class forms : AppCompatActivity() {
                         val divArray = resources.getStringArray(R.array.division)
 
                         spinnerDivision.setSelection(divArray.indexOf(fDivision))
+
                     }.addOnFailureListener {
                         Toast.makeText(this@forms,"Data cannot be received",Toast.LENGTH_SHORT).show()
                     }
@@ -124,33 +127,55 @@ class forms : AppCompatActivity() {
             val clgId = etClgId.text.toString().uppercase(Locale.ROOT)
             val userId = currentUser?.uid
             val curSrNO = count.toString()
-
-            val checkedGenderButton = rgGender.checkedRadioButtonId
-            val rgGenderValue = findViewById<RadioButton>(checkedGenderButton)
-            val gender = rgGenderValue.text.toString()
-
-            val checkedYearButton = rgYear.checkedRadioButtonId
-            val rgYearValue = findViewById<RadioButton>(checkedYearButton)
-            val year = rgYearValue.text.toString()
+            val tvGender = binding.rgGender
+            val tvYear = binding.rgYear
 
             val department = spinnerDept.selectedItem.toString()
 
+            // Get the text entered in the EditText
+            val ageText = etAge.text.toString()
+
+// Convert the input to an integer
+            val checkAge = ageText.toIntOrNull()
+
 //            Toast.makeText(this@forms,"$gender , $year",Toast.LENGTH_SHORT).show()
 
-            if (fullname.isNotEmpty() && age.isNotEmpty() && gender.isNotEmpty() && year.isNotEmpty() && department.isNotEmpty()) {
-                val usersData = Users(fullname=fullname,age=age,division=division, clgId = clgId, gender = gender, year = year, department = department,userId= userId) // Use clgId here
-                firebaseConfig.createNewUserDetailsRef(clgId).setValue(usersData) // Use clgId here
-                    .addOnCompleteListener {
-                        Toast.makeText(this, "Data insert", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, concession_form::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "Data not insert", Toast.LENGTH_SHORT).show()
-                    }
-            } else {
-                Toast.makeText(this, "Fill empty fields", Toast.LENGTH_SHORT).show()
+            if(checkAge != null && checkAge <= 25){
+                if (fullname.isNotEmpty() && age.isNotEmpty() && tvGender.isNotEmpty() && tvYear.isNotEmpty() && department.isNotEmpty()) {
+                    val checkedGenderButton = rgGender.checkedRadioButtonId
+                    val rgGenderValue = findViewById<RadioButton>(checkedGenderButton)
+                    val gender = rgGenderValue.text.toString()
+
+                    val checkedYearButton = rgYear.checkedRadioButtonId
+                    val rgYearValue = findViewById<RadioButton>(checkedYearButton)
+                    val year = rgYearValue.text.toString()
+
+                    val usersData = Users(
+                        fullname = fullname,
+                        age = age,
+                        division = division,
+                        clgId = clgId,
+                        gender = gender,
+                        year = year,
+                        department = department,
+                        userId = userId
+                    ) // Use clgId here
+                    firebaseConfig.createNewUserDetailsRef(clgId)
+                        .setValue(usersData) // Use clgId here
+                        .addOnCompleteListener {
+                            Toast.makeText(this, "Data inserted", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this, concession_form::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Data not insert", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    Toast.makeText(this, "Fill empty fields", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this,"Age is more then limit",Toast.LENGTH_SHORT).show()
             }
 
             count++

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Railway Concession</string>
+    <string name="app_name">VPPCOE Railway Concession</string>
     <string name="user_first_name">Asmita</string>
     <string name="user_name1">Asmita</string>
 
@@ -114,9 +114,9 @@
         <item>Vile Parle</item>
         <item>Wadala Rd</item>
     </string-array>
-    <string-array name="Destination">
-        <item>Sion</item>
+    <string-array name="destination">
         <item>Chunabhatti</item>
+        <item>Sion</item>
         <item>Kurla</item>
     </string-array>
 

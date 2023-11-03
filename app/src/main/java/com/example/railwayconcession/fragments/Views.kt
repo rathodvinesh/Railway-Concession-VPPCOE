@@ -239,7 +239,7 @@ fun ConcessionListItem(
                         .weight(1f)
                 ) {
                     Text(text = "Class : ")
-                    Text(text = item.concession_class.toString(), fontWeight = FontWeight.Bold)
+                    Text(text = item.concessionClass.toString(), fontWeight = FontWeight.Bold)
                 }
 //                Spacer(modifier = Modifier.weight(1f))
                 Row(

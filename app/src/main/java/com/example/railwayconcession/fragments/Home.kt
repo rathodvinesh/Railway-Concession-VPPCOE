@@ -1,18 +1,25 @@
 package com.example.railwayconcession.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.railwayconcession.R
@@ -25,7 +32,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
+import java.util.Calendar
 import java.util.Objects
+import javax.security.auth.callback.Callback
 
 class Home : Fragment() {
 
@@ -48,44 +58,116 @@ class Home : Fragment() {
 
         val dbref = firebaseConfig.userRef.child("$clgId/CLIST/")
 
-//        var name by remember { mutableStateOf() }
-//        binding.name.text = clgId.toString()
 
-//        val myImageView = view?.findViewById<ImageView>(R.id.home_img)
-//
-//        // To change the image to a new one:
-//        myImageView?.setImageResource(R.drawable.daysleft)
+        val calendar = Calendar.getInstance()
+        val timeOfDay = calendar.get(Calendar.HOUR_OF_DAY)
 
-//        imageView = view?.findViewById(R.id.home_img)
-//
-//        // Set a new image for the ImageView
-//        imageView?.setImageResource(R.drawable.daysleft)
+        val greet = when (timeOfDay) {
+            in 0..11 -> "Good Morning"
+            in 12..16 -> "Good Afternoon"
+            in 17..23 -> "Good Evening"
+            else -> "Good Night"
+        }
 
+        binding.greet.text = "$greet"
+
+
+        binding.progressBar.visibility = View.VISIBLE
         binding.homeImgDesc1.visibility = View.VISIBLE
 
-        binding.btnApplyConcession.setOnClickListener {
 
-            val intent = Intent(this.context, forms::class.java)
-            startActivity(intent)
-        }
+        val timeForRetrieve = ArrayList<String>()
+
+        firebaseConfig.userRef.child("$clgId/CLIST").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (snapshot in snapshot.children) {
+                        binding.progressBar.visibility = View.GONE
+                        val key = snapshot.key
+                        if (key != null) {
+                            timeForRetrieve.add(key)
+//                            Toast.makeText(this@concession_form, key, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    // Get the last element from the list
+                    val lastTime = timeForRetrieve.lastOrNull()
+
+                    if (lastTime != null) {
+                        firebaseConfig.userRef.child("$clgId/CLIST/$lastTime/concessionPeriod").addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if (snapshot.exists()) {
+
+                                    binding.progressBar.visibility = View.GONE
+
+                                    val concessionPeriod = snapshot.getValue(String::class.java)
+
+                                    val myImageView = view?.findViewById<ImageView>(R.id.home_img)
+
+//                                    myImageView?.setImageResource(R.drawable.calender)
+//                                    binding.homeImgDesc1.visibility = View.VISIBLE
+//                                    binding.homeImgDesc2.visibility = View.GONE
+
+                                    // Handle image changes based on the concession period
+                                    when (concessionPeriod) {
+                                        "Monthly" -> {
+                                            applyBtnDisable()
+                                            myImageView?.setImageResource(R.drawable._27_days)
+                                            binding.homeImgDesc1.visibility = View.GONE
+                                            binding.homeImgDesc2.visibility = View.VISIBLE
+                                        }
+                                        "Quarterly" -> {
+                                            applyBtnDisable()
+                                            myImageView?.setImageResource(R.drawable._83_days)
+                                            binding.homeImgDesc1.visibility = View.GONE
+                                            binding.homeImgDesc2.visibility = View.VISIBLE
+                                        }
+                                        else -> {
+                                            applyBtnDisable()
+                                            myImageView?.setImageResource(R.drawable._335_days)
+                                            binding.homeImgDesc1.visibility = View.GONE
+                                            binding.homeImgDesc2.visibility = View.VISIBLE
+                                        }
+//                                        else -> {
+//                                            myImageView?.setImageResource(R.drawable.calender)
+//                                            binding.homeImgDesc1.visibility = View.VISIBLE
+//                                            binding.homeImgDesc2.visibility = View.GONE
+//                                        }
+                                    }
+
+
+
+                                }else{
+                                    binding.progressBar.visibility = View.GONE
+                                    val myImageView = view?.findViewById<ImageView>(R.id.home_img)
+
+                                            myImageView?.setImageResource(
+                                                R.drawable.calender
+                                            )
+                                            binding.homeImgDesc1.visibility = View.VISIBLE
+                                            binding.homeImgDesc2.visibility = View.GONE
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                // Handle the error
+                            }
+                        })
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), "Cannot get key", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         firebaseConfig.userRef.child("$clgId/USERD/fullname").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val fullname = snapshot.getValue(String::class.java)
                 if (fullname != null) {
                     binding.name.text = fullname.toString()
-
-//                    val vectorDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.daysleft)
-//                    binding.homeImg.setImageDrawable(R.drawable.daysleft)
-
-                    val myImageView = view?.findViewById<ImageView>(R.id.home_img)
-
-                    // To change the image to a new one:
-                    myImageView?.setImageResource(R.drawable._27_days)
-
-                    binding.homeImgDesc1.visibility = View.GONE
-                    binding.homeImgDesc2.visibility = View.GONE
-
+                    binding.progressBar.visibility = View.GONE
                 } else {
                     binding.name.text = ""
                 }
@@ -96,44 +178,31 @@ class Home : Fragment() {
             }
         })
 
-//        val concessionPeriodRef = firebaseConfig.userRef.child("$clgId/CLIST/02_11_2023_19_12/concessionPeriod")
-//
-//        concessionPeriodRef.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val concessionPeriod = snapshot.getValue(String::class.java)
-//
-//                val myImageView = view?.findViewById<ImageView>(R.id.home_img)
-//
-//                // Handle image changes based on the concession period
-//                when (concessionPeriod) {
-//                    "monthly" -> myImageView?.setImageResource(R.drawable.monthly_image)
-//                    "quarterly" -> myImageView?.setImageResource(R.drawable.quarterly_image)
-//                    "yearly" -> myImageView?.setImageResource(R.drawable.yearly_image)
-//                    else -> myImageView?.setImageResource(R.drawable.default_image)
-//                }
-//
-//                // To change the image to a new one (example: _27_days):
-//                myImageView?.setImageResource(R.drawable._27_days)
-//
-//                binding.homeImgDesc1.visibility = View.GONE
-//                binding.homeImgDesc2.visibility = View.VISIBLE
+
+        binding.btnApplyConcession.setOnClickListener {
+
+            val intent = Intent(this.context, forms::class.java)
+            startActivity(intent)
+        }
+
+        binding.homeImgDesc2.setOnClickListener{
+//            val builder = AlertDialog.Builder(requireContext())
+//            builder.setTitle("Click on Views")
+//            builder.setPositiveButton("OK") { dialog, _ ->
+//                dialog.dismiss()
 //            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                // Handle the error
-//            }
-//        })
+//            val dialog = builder.create()
+//            dialog.show()
+            Toast.makeText(requireContext(),"Click on Views",Toast.LENGTH_SHORT).show()
+        }
 
 
         return binding.root
     }
-
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//
-//        navController = Navigation.findNavController(view)
-//
-//        super.onViewCreated(view, savedInstanceState)
-//    }
+    fun applyBtnDisable(){
+        binding.btnApplyConcession.isEnabled = false
+        binding.btnApplyConcession.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#d3d4fa"))
+//        binding.btnApplyConcession.setTextColor(ContextCompat.getColor(requireContext(), R.color.disabledText))
+    }
 
 }

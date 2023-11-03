@@ -9,6 +9,7 @@
     <color name="accepted">#88B33A</color>
     <color name="rejected">#FE707C</color>
     <color name="pending">#FECA70</color>
+    <color name="disabledText">#8f94b2</color>
 
     <!--    <color name="purple">#490287</color>-->
 <!--    <color name="purple">#490287</color>-->

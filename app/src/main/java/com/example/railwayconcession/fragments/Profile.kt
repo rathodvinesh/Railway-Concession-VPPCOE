@@ -60,7 +60,7 @@ class Profile : Fragment() {
         val currentUser = auth.currentUser
 //        val clgId = arguments?.getString("clgId")
 
-        var auth: FirebaseAuth = Firebase.auth
+        auth = Firebase.auth
         val email = auth.currentUser?.email
         val clgId = email?.substring(0, 11)?.toUpperCase()
 // Check if the user is authenticated
