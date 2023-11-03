@@ -28,6 +28,7 @@ class forms : AppCompatActivity() {
 //    private lateinit var database: DatabaseReference
     private lateinit var binding: FragmentPersonalFormBinding
     private lateinit var auth : FirebaseAuth
+    private var count = 1111
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +47,7 @@ class forms : AppCompatActivity() {
         val rgGender = binding.rgGender
         val rgYear = binding.rgYear
         val spinnerDept = binding.spinnerDept
+//        val srNo = binding.srNO
 
         val currentUser = auth.currentUser
 
@@ -55,12 +57,73 @@ class forms : AppCompatActivity() {
 
         etClgId.text = clgId.toString()
         etClgId.isEnabled = false
+
+//            srNo.text = "Sr No. $count"
+
+        firebaseConfig.userRef.child("$clgId/USERD").addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    firebaseConfig.userRef.child("$clgId/USERD").get().addOnSuccessListener {
+                        val editFName =snapshot.child("fullname").value.toString()
+                        val fName = Editable.Factory.getInstance().newEditable(editFName)
+
+                        val editAge =snapshot.child("age").value.toString()
+                        val fAge = Editable.Factory.getInstance().newEditable(editAge)
+
+                        binding.etFullName.text = fName
+                        binding.etAge.text = fAge
+
+                        val fGender = snapshot.child("gender").value.toString()
+
+                        //checked button instance from fb
+                        when(fGender){
+                            "Male"-> rgGender.check(R.id.rgValMale)
+                            "Female"-> rgGender.check(R.id.rgValFemale)
+                            else -> rgGender.check(R.id.rgValOther)
+                        }
+
+                        val fYear = snapshot.child("year").value.toString()
+
+                        when(fYear){
+                            "F.E."-> rgYear.check(R.id.rgValFE)
+                            "S.E."-> rgYear.check(R.id.rgValSE)
+                            "T.E."-> rgYear.check(R.id.rgValTE)
+                            else -> rgYear.check(R.id.rgValBE)
+                        }
+
+                        //SPinner
+
+                        val fDept = snapshot.child("department").value.toString()
+
+                        val deptArray = resources.getStringArray(R.array.department)
+
+                        binding.spinnerDept.setSelection(deptArray.indexOf(fDept))
+
+                        val fDivision = snapshot.child("division").value.toString()
+
+                        val divArray = resources.getStringArray(R.array.division)
+
+                        spinnerDivision.setSelection(divArray.indexOf(fDivision))
+                    }.addOnFailureListener {
+                        Toast.makeText(this@forms,"Data cannot be received",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+
         tvNext.setOnClickListener {
+
             val fullname = etFullName.text.toString()
             val age = etAge.text.toString()
             val division = spinnerDivision.selectedItem.toString()
             val clgId = etClgId.text.toString().uppercase(Locale.ROOT)
             val userId = currentUser?.uid
+            val curSrNO = count.toString()
 
             val checkedGenderButton = rgGender.checkedRadioButtonId
             val rgGenderValue = findViewById<RadioButton>(checkedGenderButton)
@@ -89,61 +152,8 @@ class forms : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Fill empty fields", Toast.LENGTH_SHORT).show()
             }
+
+            count++
         }
-
-        firebaseConfig.userRef.child("$clgId/USERD").addValueEventListener(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    firebaseConfig.userRef.child("$clgId/USERD").get().addOnSuccessListener {
-                        val editFName =snapshot.child("fullname").value.toString()
-                        val fName = Editable.Factory.getInstance().newEditable(editFName)
-
-                        val editAge =snapshot.child("age").value.toString()
-                        val age = Editable.Factory.getInstance().newEditable(editAge)
-
-                        binding.etFullName.text = fName
-                        binding.etAge.text = age
-
-                        val gender = snapshot.child("gender").value.toString()
-
-                        //checked button instance from fb
-                        when(gender){
-                            "Male"-> rgGender.check(R.id.rgValMale)
-                            "Female"-> rgGender.check(R.id.rgValFemale)
-                            else -> rgGender.check(R.id.rgValOther)
-                        }
-
-                        val year = snapshot.child("year").value.toString()
-
-                        when(year){
-                            "F.E"-> rgYear.check(R.id.rgValFE)
-                            "S.E"-> rgYear.check(R.id.rgValSE)
-                            "T.E"-> rgYear.check(R.id.rgValTE)
-                            else -> rgYear.check(R.id.rgValBE)
-                        }
-
-                        //SPinner
-
-                        val dept = snapshot.child("department").value.toString()
-
-                        val deptArray = resources.getStringArray(R.array.department)
-
-                        binding.spinnerDept.setSelection(deptArray.indexOf(dept))
-
-                        val division = snapshot.child("division").value.toString()
-
-                        val divArray = resources.getStringArray(R.array.division)
-
-                        spinnerDivision.setSelection(divArray.indexOf(division))
-                    }.addOnFailureListener {
-                        Toast.makeText(this@forms,"Data cannot be received",Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
     }
 }

@@ -29,15 +29,16 @@
                 android:layout_height="wrap_content"
                 android:text="Fill the details"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginBottom="10dp"
-                android:text="Sr. No. 3114"
-                android:textSize="24sp" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:text="Sr. No. 3114"-->
+<!--                android:textSize="24sp" />-->
 
             <TextView
                 android:layout_width="match_parent"

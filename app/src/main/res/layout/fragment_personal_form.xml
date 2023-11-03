@@ -26,16 +26,17 @@
         android:text="Fill the details"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:layout_marginBottom="10dp"
         />
 
-    <TextView
-        android:id="@+id/srNO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="Sr. No.-"
-        android:textSize="24sp"
-        android:layout_marginBottom="10dp"/>
+<!--    <TextView-->
+<!--        android:id="@+id/srNO"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:text="Sr. No.-"-->
+<!--        android:textSize="24sp"-->
+<!--        android:layout_marginBottom="10dp"/>-->
 
     <TextView
         android:layout_width="match_parent"
