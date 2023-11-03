@@ -1,0 +1,134 @@
+<resources>
+    <string name="app_name">Railway Concession</string>
+    <string name="user_first_name">Asmita</string>
+    <string name="user_name1">Asmita</string>
+
+    <string-array name="department">
+        <item>Comp Engg</item>
+        <item>IT</item>
+        <item>EXTC</item>
+        <item>AIDS</item>
+
+    </string-array>
+
+    <string-array name="division">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+    </string-array>
+
+    <string-array name="concessionPeriod">
+        <item>Monthly</item>
+        <item>Quarterly</item>
+        <item>Yearly</item>
+    </string-array>
+
+    <string-array name="source">
+        <item>Airoli</item>
+        <item>Ambernath</item>
+        <item>Andheri</item>
+        <item>Badlapur</item>
+        <item>Bandra</item>
+        <item>Belapur CBD</item>
+        <item>Bhayander</item>
+        <item>Bhandup</item>
+        <item>Bharanikavu</item>
+        <item>Borivali</item>
+        <item>Byculla</item>
+        <item>Charni Road</item>
+        <item>Chembur</item>
+        <item>Chinchpokli</item>
+        <item>Chunabhatti</item>
+        <item>Churchgate</item>
+        <item>CSMT</item>
+        <item>Cotton Green</item>
+        <item>Currey Road</item>
+        <item>Dadar</item>
+        <item>Dahanu Road</item>
+        <item>Divyadeesam</item>
+        <item>Dockyard Road</item>
+        <item>Dolavli</item>
+        <item>Dombivli</item>
+        <item>Ghansoli</item>
+        <item>Goregaon</item>
+        <item>Govandi</item>
+        <item>Grant Road</item>
+        <item>Ghatkopar</item>
+        <item>Ghatkopar Metro</item>
+        <item>Kalyan</item>
+        <item>Kandivali</item>
+        <item>Kanjur Marg</item>
+        <item>Karjat</item>
+        <item>Kelve Road</item>
+        <item>Kelavli</item>
+        <item>Kharghar</item>
+        <item>Khar Road</item>
+        <item>Kings Circle</item>
+        <item>Kopar</item>
+        <item>Koparkhairne</item>
+        <item>Kurla</item>
+        <item>Kurla Junction</item>
+        <item>Kurla Terminus</item>
+        <item>Mahim Jn</item>
+        <item>Mahalakshmi</item>
+        <item>Mahape</item>
+        <item>Mankhurd</item>
+        <item>Marine Lines</item>
+        <item>Masjid</item>
+        <item>Matunga</item>
+        <item>Matunga Road</item>
+        <item>Mira Road</item>
+        <item>Mulund</item>
+        <item>Mumbra</item>
+        <item>Mumbai Central</item>
+        <item>Mumbai CST</item>
+        <item>Nahur</item>
+        <item>Naigaon</item>
+        <item>Nalla Sopara</item>
+        <item>Neral</item>
+        <item>Nerul</item>
+        <item>Panvel</item>
+        <item>Parel</item>
+        <item>Prabhadevi</item>
+        <item>Rabale</item>
+        <item>Ram Mandir</item>
+        <item>Reay Road</item>
+        <item>Sandhurst Road</item>
+        <item>Santacruz</item>
+        <item>Sanpada</item>
+        <item>Satpati</item>
+        <item>Sewri</item>
+        <item>Shelu</item>
+        <item>Sion</item>
+        <item>Tilaknagar</item>
+        <item>Turbhe</item>
+        <item>Ulhas Nagar</item>
+        <item>Umroli Road</item>
+        <item>Vaitarna</item>
+        <item>Vangaon</item>
+        <item>Vasai Road</item>
+        <item>Vashi</item>
+        <item>Vikhroli</item>
+        <item>Vile Parle</item>
+        <item>Wadala Rd</item>
+    </string-array>
+    <string-array name="Destination">
+        <item>Sion</item>
+        <item>Chunabhatti</item>
+        <item>Kurla</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="user_name">Asmita Ghode</string>
+    <string name="user_">Asmita</string>
+    <string name="user_class">TE Comps A</string>
+    <string name="user_ID_no">VU1F2122031</string>
+    <string name="user_email">vu1f2122031@pvppcoe.ac.in</string>
+    <string name="user_contact_no">9004954995</string>
+    <string name="user_aadhar_card">123456789012</string>
+    <string name="user_age">19</string>
+</resources>

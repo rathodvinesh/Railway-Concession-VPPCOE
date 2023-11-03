@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1032427461228",
+    "firebase_url": "https://vppcoe-concession-railway-default-rtdb.firebaseio.com",
+    "project_id": "vppcoe-concession-railway",
+    "storage_bucket": "vppcoe-concession-railway.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032427461228:android:85b5c13bde2b6c63aed649",
+        "android_client_info": {
+          "package_name": "com.example.railwayconcession"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032427461228-hrstoqtqqqarvvhr9ffnrp94bu9nooab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwsNJMfCZZOVNpMDiHpdiPFrAkvZqhZh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032427461228-hrstoqtqqqarvvhr9ffnrp94bu9nooab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032427461228:android:95b078ac4a3be43eaed649",
+        "android_client_info": {
+          "package_name": "com.example.vppcoerailwayconcession"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032427461228-hrstoqtqqqarvvhr9ffnrp94bu9nooab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwsNJMfCZZOVNpMDiHpdiPFrAkvZqhZh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032427461228-hrstoqtqqqarvvhr9ffnrp94bu9nooab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

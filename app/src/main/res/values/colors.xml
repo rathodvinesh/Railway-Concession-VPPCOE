@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="purple">#490287</color>
+    <color name="light_purple">#C598E4</color>
+    <color name="grey">#979797</color>
+    <color name="blue">#7076FE</color>
+    <color name="accepted">#88B33A</color>
+    <color name="rejected">#FE707C</color>
+    <color name="pending">#FECA70</color>
+
+    <!--    <color name="purple">#490287</color>-->
+<!--    <color name="purple">#490287</color>-->
+
+</resources>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home2">
+    <activity
+        android:id="@+id/login"
+        android:name="com.example.railwayconcession.activities.login"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <fragment
+        android:id="@+id/home2"
+        android:name="com.example.railwayconcession.fragments.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home2_to_forms"
+            app:destination="@id/forms" />
+        <action
+            android:id="@+id/action_home2_to_views"
+            app:destination="@id/views" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.railwayconcession.fragments.Profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profile_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/views"
+        android:name="com.example.railwayconcession.fragments.Views"
+        android:label="fragment_views"
+        tools:layout="@layout/fragment_views" />
+    <activity
+        android:id="@+id/forms"
+        android:name="com.example.railwayconcession.activities.forms"
+        android:label="personal_form"
+        tools:layout="@layout/fragment_personal_form"></activity>
+    <activity
+        android:id="@+id/concession_form"
+        android:name="com.example.railwayconcession.activities.concession_form"
+        android:label="activity_concession_form"
+        tools:layout="@layout/activity_concession_form" />
+</navigation>
