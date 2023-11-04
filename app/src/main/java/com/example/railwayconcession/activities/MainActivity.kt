@@ -35,17 +35,8 @@ class MainActivity : AppCompatActivity() {
             binding= ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
-//            val navHostFragment = supportFragmentManager
-//                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//
-//            // Initialize the NavController
-//            val navController = navHostFragment.navController
-
-//            binding.bottomNavigation.setOnItemSelectedListener { menuItem->
-//                when(menuItem){
-//                    R.id.home2 -> findNavController().navigate(ac)
-//                }
-//            }
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            navController = navHostFragment.navController
 
 //            val currentDateTime = LocalDateTime.now()
 //            val formatter = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm")
@@ -93,33 +84,45 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 //            Log.d("data",userConcessionList.toString())
-            replaceFragment(Home())
+//            replaceFragment(Home())
+//
+//            setUpFragment()
 
-            setUpFragment()
-
+            navigateToViews()
         }
 
-
-
-        private fun setUpFragment() {
-            binding.bottomNavigation.setItemSelected(R.id.nav_home)
-            binding.bottomNavigation.setOnItemSelectedListener {
-                when(it){
-                    R.id.nav_home ->replaceFragment(Home())
-                    R.id.nav_view ->replaceFragment(Views())
-                    R.id.nav_profile ->replaceFragment(Profile())
-
-                    else -> replaceFragment(Home())
-                }
+    fun navigateToViews() {
+         binding.bottomNavigation.setOnItemSelectedListener {
+            when (it) {
+                R.id.nav_home -> navController.navigate(R.id.home2)
+                R.id.nav_view -> navController.navigate(R.id.views)
+                R.id.nav_profile -> navController.navigate(R.id.profile)
+                else -> navController.navigate(R.id.home2)
             }
         }
+//            binding.bottomNavigation.setItemSelected(R.id.nav_home)
+        binding.bottomNavigation.setItemSelected(R.id.nav_home)
+    }
 
-        private fun replaceFragment(home: Fragment) {
-            val fragManager = supportFragmentManager
-            val fragTransaction = fragManager.beginTransaction()
-            fragTransaction.replace(R.id.nav_host_fragment,home)
-            fragTransaction.commit()
-        }
+//        private fun setUpFragment() {
+//            binding.bottomNavigation.setItemSelected(R.id.nav_home)
+//            binding.bottomNavigation.setOnItemSelectedListener {
+//                when(it){
+//                    R.id.nav_home ->replaceFragment(Home())
+//                    R.id.nav_view ->replaceFragment(Views())
+//                    R.id.nav_profile ->replaceFragment(Profile())
+//
+//                    else -> replaceFragment(Home())
+//                }
+//            }
+//        }
+//
+//        private fun replaceFragment(home: Fragment) {
+//            val fragManager = supportFragmentManager
+//            val fragTransaction = fragManager.beginTransaction()
+//            fragTransaction.replace(R.id.nav_host_fragment,home)
+//            fragTransaction.commit()
+//        }
 
 
 

@@ -63,7 +63,6 @@
                     android:id="@+id/home_img"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:src="@drawable/calender"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp">
 

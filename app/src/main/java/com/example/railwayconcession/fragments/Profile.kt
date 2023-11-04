@@ -41,11 +41,13 @@ class Profile : Fragment() {
         auth = Firebase.auth
 
         //prog bar
-        val progBar: ProgressBar = binding.progressBar
+        binding.profileProgressBar.visibility = View.VISIBLE
+
 
         binding.logOutButton.setOnClickListener {
 
-            progBar.visibility = View.VISIBLE
+            binding.profileProgressBar
+                .visibility = View.VISIBLE
 
             auth.signOut()
 
@@ -86,6 +88,8 @@ class Profile : Fragment() {
                         binding.profileClgId.text = userIdNo
                         binding.profileClgEmail.text = email
                         binding.profileAge.text = userAge
+                        binding.profileProgressBar.visibility = View.GONE
+
                     }
                 }
 

@@ -16,10 +16,25 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_home2_to_forms"
-            app:destination="@id/forms" />
+            app:destination="@id/forms"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_home2_to_views"
-            app:destination="@id/views" />
+            app:destination="@id/views"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_home2_to_profile"
+            app:destination="@id/profile"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/profile"
@@ -34,7 +49,24 @@
         android:id="@+id/views"
         android:name="com.example.railwayconcession.fragments.Views"
         android:label="fragment_views"
-        tools:layout="@layout/fragment_views" />
+        tools:layout="@layout/fragment_views" >
+        <action
+            android:id="@+id/action_views_to_concession_form"
+            app:destination="@id/concession_form"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/views"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_views_to_update"
+            app:destination="@id/update"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <activity
         android:id="@+id/forms"
         android:name="com.example.railwayconcession.activities.forms"
@@ -45,4 +77,17 @@
         android:name="com.example.railwayconcession.activities.concession_form"
         android:label="activity_concession_form"
         tools:layout="@layout/activity_concession_form" />
+    <fragment
+        android:id="@+id/update"
+        android:name="com.example.railwayconcession.fragments.update"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" >
+        <action
+            android:id="@+id/action_update_to_views"
+            app:destination="@id/views"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+    </fragment>
 </navigation>

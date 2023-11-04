@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.railwayconcession.R
+import com.example.railwayconcession.activities.MainActivity
 import com.example.railwayconcession.databinding.FragmentHomeBinding
 import com.example.railwayconcession.activities.forms
 import com.example.railwayconcession.firebaseConfig
@@ -41,7 +42,7 @@ class Home : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var navController: NavController
-    private var imageView: ImageView? = null
+//    private var imageView: ImageView? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -50,6 +51,10 @@ class Home : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
+
+
+        //nav
+        navController = findNavController()
 
         // clg id
         var auth: FirebaseAuth = Firebase.auth
@@ -73,7 +78,7 @@ class Home : Fragment() {
 
 
         binding.progressBar.visibility = View.VISIBLE
-        binding.homeImgDesc1.visibility = View.VISIBLE
+//        binding.homeImgDesc1.visibility = View.VISIBLE
 
 
         val timeForRetrieve = ArrayList<String>()
@@ -87,6 +92,15 @@ class Home : Fragment() {
                         if (key != null) {
                             timeForRetrieve.add(key)
 //                            Toast.makeText(this@concession_form, key, Toast.LENGTH_SHORT).show()
+                        }else{
+                            binding.progressBar.visibility = View.GONE
+                            val home1ImageView = view?.findViewById<ImageView>(R.id.home_img)
+
+                            home1ImageView?.setImageResource(
+                                R.drawable.calender
+                            )
+                            binding.homeImgDesc1.visibility = View.VISIBLE
+                            binding.homeImgDesc2.visibility = View.GONE
                         }
                     }
 
@@ -139,60 +153,105 @@ class Home : Fragment() {
 
                                 }else{
                                     binding.progressBar.visibility = View.GONE
-                                    val myImageView = view?.findViewById<ImageView>(R.id.home_img)
-
-                                            myImageView?.setImageResource(
-                                                R.drawable.calender
-                                            )
-                                            binding.homeImgDesc1.visibility = View.VISIBLE
-                                            binding.homeImgDesc2.visibility = View.GONE
+                                    val home2ViewImage = view?.findViewById<ImageView>(R.id.home_img)
+                                    home2ViewImage?.setImageResource(
+                                        R.drawable.calender
+                                    )
+                                    binding.homeImgDesc1.visibility = View.VISIBLE
+                                    binding.homeImgDesc2.visibility = View.GONE
                                 }
                             }
 
                             override fun onCancelled(error: DatabaseError) {
                                 // Handle the error
+                                val home3ImageView = view?.findViewById<ImageView>(R.id.home_img)
+                                home3ImageView?.setImageResource(
+                                    R.drawable.calender
+                                )
+                                binding.homeImgDesc1.visibility = View.VISIBLE
+                                binding.homeImgDesc2.visibility = View.GONE
                             }
                         })
                     }
+                }
+                else{
+                    val home4ImageView= view?.findViewById<ImageView>(R.id.home_img)
+                    home4ImageView?.setImageResource(
+                        R.drawable.calender
+                    )
+                    binding.homeImgDesc1.visibility = View.VISIBLE
+                    binding.homeImgDesc2.visibility = View.GONE
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(requireContext(), "Cannot get key", Toast.LENGTH_SHORT).show()
+                val home5ImageView= view?.findViewById<ImageView>(R.id.home_img)
+                home5ImageView?.setImageResource(
+                    R.drawable.calender
+                )
+                binding.homeImgDesc1.visibility = View.VISIBLE
+                binding.homeImgDesc2.visibility = View.GONE
             }
         })
 
         firebaseConfig.userRef.child("$clgId/USERD/fullname").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val fullname = snapshot.getValue(String::class.java)
+                    val home6ImageView = view?.findViewById<ImageView>(R.id.home_img)
                 if (fullname != null) {
                     binding.name.text = fullname.toString()
                     binding.progressBar.visibility = View.GONE
+
+                    home6ImageView?.setImageResource(
+                        R.drawable.calender
+                    )
+                    binding.homeImgDesc1.visibility = View.VISIBLE
+                    binding.homeImgDesc2.visibility = View.GONE
                 } else {
                     binding.name.text = ""
+                    binding.progressBar.visibility = View.GONE
+
+                    home6ImageView?.setImageResource(
+                        R.drawable.calender
+                    )
+                    binding.homeImgDesc1.visibility = View.VISIBLE
+                    binding.homeImgDesc2.visibility = View.GONE
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 // Handle the error here
+                val home7ImageView = view?.findViewById<ImageView>(R.id.home_img)
+                home7ImageView?.setImageResource(
+                    R.drawable.calender
+                )
+                binding.homeImgDesc1.visibility = View.VISIBLE
+                binding.homeImgDesc2.visibility = View.GONE
             }
         })
 
 
         binding.btnApplyConcession.setOnClickListener {
 
-            val intent = Intent(this.context, forms::class.java)
-            startActivity(intent)
+//            val intent = Intent(this.context, forms::class.java)
+//            startActivity(intent)
+//
+            navController.navigate(R.id.action_home2_to_forms)
         }
 
         binding.homeImgDesc2.setOnClickListener{
-//            val builder = AlertDialog.Builder(requireContext())
-//            builder.setTitle("Click on Views")
-//            builder.setPositiveButton("OK") { dialog, _ ->
-//                dialog.dismiss()
+//            navController.navigate(R.id.action_home2_to_views)
+
+
+
+//            navController.addOnDestinationChangedListener { controller, destination, arguments ->
+//                if (destination.id == R.id.views) {
+//                    // Set the selected destination as "views" in the bottom navigation view
+//                    // Assuming you have a BottomNavigationView with an ID of "bottomNavigationView"
+//                    binding.bottomNavigationView.selectedItemId = R.id.views
+//                }
 //            }
-//            val dialog = builder.create()
-//            dialog.show()
             Toast.makeText(requireContext(),"Click on Views",Toast.LENGTH_SHORT).show()
         }
 
