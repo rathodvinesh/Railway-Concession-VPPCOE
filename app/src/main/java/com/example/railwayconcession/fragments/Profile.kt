@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.railwayconcession.R
 import com.example.railwayconcession.activities.login
 import com.example.railwayconcession.databinding.FragmentProfileBinding
@@ -40,6 +41,8 @@ class Profile : Fragment() {
         //firebase auth for user
         auth = Firebase.auth
 
+//        navController.findNavController()
+
         //prog bar
         binding.profileProgressBar.visibility = View.VISIBLE
 
@@ -53,6 +56,8 @@ class Profile : Fragment() {
 
             activity?.finish()
             startActivity(Intent(this.context, login::class.java))
+//            navController.findDestination(R.id.login)
+////            navController.navigate(R.id.action_profile_to_login)
 
         }
 //        binding.notifications.setOnClickListener {

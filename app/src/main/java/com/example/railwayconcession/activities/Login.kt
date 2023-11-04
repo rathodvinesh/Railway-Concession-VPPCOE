@@ -40,6 +40,7 @@ class login : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(username, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+                            progBar.visibility = View.GONE
                             //Logic for successful
                             Toast.makeText(this, "Logged in Successfully", Toast.LENGTH_SHORT)
                                 .show()
@@ -49,6 +50,8 @@ class login : AppCompatActivity() {
                         } else {
                             val exception = task.exception
                             println(exception)
+                            progBar.visibility = View.GONE
+                            Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show()
                         }
                     }
             } else {
