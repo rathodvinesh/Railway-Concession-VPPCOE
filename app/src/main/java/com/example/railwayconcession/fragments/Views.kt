@@ -161,7 +161,9 @@ DisposableEffect(firebaseConfig.rootReference) {
             LazyColumn {
                 items(list) { item ->
 //                    showProgressBar = false
-                    ConcessionListItem(item,navController)
+                    ConcessionListItem(item,
+                        navController,
+                    )
 
                 }
             }
@@ -285,6 +287,17 @@ fun ConcessionListItem(
                     .fillMaxWidth()
                     .wrapContentHeight()
             ) {
+                Text(text = "Status : ")
+                Text(text = item.status, fontWeight = FontWeight.Bold)
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
                 Row(
                     horizontalArrangement = Arrangement.Start, modifier = Modifier
                         .weight(1f)
@@ -292,11 +305,13 @@ fun ConcessionListItem(
                 ) {
                     Button(
                         onClick = {
-                            navController.navigate(R.id.action_views_to_update)
+                                navController.navigate(R.id.action_views_to_update)
                         },
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(Color.Blue)
+                            .weight(1f)
+                            .padding(end = 4.dp),
+                        colors = ButtonDefaults.buttonColors(Color.Blue),
+                        enabled = item.status !in listOf("Accepted", "Rejected")
                     ) {
                         Text(text = "Update")
 
@@ -310,13 +325,13 @@ fun ConcessionListItem(
                 {
                     Button(
                         onClick = {
-                            showDeleteDialog = true
-//                        showSnackbar = true
+                                showDeleteDialog = true
                         },
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(Color.Red)
-
+                            .weight(1f)
+                            .padding(start = 4.dp),
+                        colors = ButtonDefaults.buttonColors(Color.Red),
+                        enabled = item.status !in listOf("Accepted", "Rejected")
                     ) {
                         Text(text = "Delete")
                     }
@@ -369,27 +384,25 @@ fun ConcessionListItem(
                                             // Get the last element from the list
                                             val lastTime = timeForRetrieve.lastOrNull()
 
-                                            if (lastTime != null) {
-                                                firebaseConfig.userRef.child("$clgId/CLIST")
-                                                    .addValueEventListener(object :
-                                                        ValueEventListener {
-                                                        override fun onDataChange(snapshot: DataSnapshot) {
-                                                            if (snapshot.exists()) {
-                                                                firebaseConfig.userRef.child("$clgId/CLIST").child("$lastTime").removeValue()
-                                                                    .addOnSuccessListener {
+                                            firebaseConfig.userRef.child("$clgId/CLIST")
+                                                .addValueEventListener(object :
+                                                    ValueEventListener {
+                                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                                        if (snapshot.exists()) {
+                                                            firebaseConfig.userRef.child("$clgId/CLIST").child("$lastTime").removeValue()
+                                                                .addOnSuccessListener {
 
-                                                                    }
-                                                                    .addOnFailureListener {
+                                                                }
+                                                                .addOnFailureListener {
 
-                                                                    }
-                                                            }
+                                                                }
                                                         }
+                                                    }
 
-                                                        override fun onCancelled(error: DatabaseError) {
-                                                            // Handle the error
-                                                        }
-                                                    })
-                                            }
+                                                    override fun onCancelled(error: DatabaseError) {
+                                                        // Handle the error
+                                                    }
+                                                })
                                         }
                                     }
 
@@ -412,37 +425,5 @@ fun ConcessionListItem(
                 }
             )
         }
-//        if (showProgressBar) {
-//            Box(
-//                modifier = Modifier.fillMaxSize(),
-//                contentAlignment = Alignment.Center
-//            ) {
-//                CircularProgressIndicator() // Circular indeterminate progress indicator
-//            }
-//        }
-//    }
-
-
-//        if (showSnackbar.value) {
-//            Snackbar(
-//                modifier = Modifier.padding(16.dp),
-//                snackbarData = { state ->
-//                    Text(text = "This is a Snackbar message")
-//                    // You can also add an action button
-//                    Button(
-//                        onClick = {
-//                            // Handle the action click here
-//                            showSnackbar.value = false
-//                        }
-//                    ) {
-//                        Text("Action")
-//                    }
-//                },
-//                onDismiss = {
-//                    showSnackbar.value = false
-//                }
-//            )
-//        }
-//    }
     }
 }

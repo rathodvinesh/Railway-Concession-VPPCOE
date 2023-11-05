@@ -9,5 +9,4 @@ data class Users(
     var gender: String?= null,
     var year: String?= null,
     var department: String?= null,
-    var userId : String ? = null
 )

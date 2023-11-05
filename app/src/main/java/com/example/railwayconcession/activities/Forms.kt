@@ -125,7 +125,6 @@ class forms : AppCompatActivity() {
             val age = etAge.text.toString()
             val division = spinnerDivision.selectedItem.toString()
             val clgId = etClgId.text.toString().uppercase(Locale.ROOT)
-            val userId = currentUser?.uid
             val curSrNO = count.toString()
             val tvGender = binding.rgGender
             val tvYear = binding.rgYear
@@ -157,8 +156,7 @@ class forms : AppCompatActivity() {
                         clgId = clgId,
                         gender = gender,
                         year = year,
-                        department = department,
-                        userId = userId
+                        department = department
                     ) // Use clgId here
                     firebaseConfig.createNewUserDetailsRef(clgId)
                         .setValue(usersData) // Use clgId here

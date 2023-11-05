@@ -147,6 +147,7 @@ class concession_form : AppCompatActivity() {
 
 //        etAppliedDate.text = Date
         btnSubmit.setOnClickListener {
+            val userId = currentUser?.uid
             val voucherNo: String = etVoucherNo.text.toString()
             val trainClass : RadioGroup = binding.rgClass
 
@@ -161,7 +162,7 @@ class concession_form : AppCompatActivity() {
                 val rgCheckedValue = findViewById<RadioButton>(checkedClassButton)
                 val etclass = rgCheckedValue.text.toString()
                 val users = userConccessionDetails(
-                    voucherNo=voucherNo, concessionClass = etclass , concessionPeriod = concessionPeriod , appliedDate= appliedDate, source = source, destination = destination
+                    userId = userId,voucherNo=voucherNo, concessionClass = etclass , concessionPeriod = concessionPeriod , appliedDate= appliedDate, source = source, destination = destination,status = "Pending"
                 )
                 clgId?.let { it1 ->
                     firebaseConfig.createNewUserCListRef(it1).setValue(users)
