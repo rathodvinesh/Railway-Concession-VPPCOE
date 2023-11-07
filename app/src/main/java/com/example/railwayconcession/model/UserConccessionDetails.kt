@@ -8,5 +8,6 @@ data class userConccessionDetails(
     var appliedDate : String? = null,
     var source : String? = null,
     var destination : String? = null,
-    var status: String = "Pending"
+    var status: String = "Pending",
+    var reason:String ="-"
 )

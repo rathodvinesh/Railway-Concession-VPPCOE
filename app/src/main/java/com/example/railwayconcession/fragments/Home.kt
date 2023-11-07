@@ -125,7 +125,7 @@ class Home : Fragment() {
                                     // Handle image changes based on the concession period
                                     when (concessionPeriod) {
                                         "Monthly" -> {
-                                            applyBtnDisable()
+//                                            applyBtnDisable()
                                             myImageView?.setImageResource(R.drawable._27_days)
                                             binding.homeImgDesc1.visibility = View.GONE
                                             binding.homeImgDesc2.visibility = View.VISIBLE

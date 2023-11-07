@@ -58,7 +58,7 @@ class concession_form : AppCompatActivity() {
 //        database = FirebaseDatabase.getInstance().reference
 
         val currentDateTime = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
         val formattedDateTime = currentDateTime.format(formatter)
 //    Log.d("Current Date and Time,", "$formattedDateTime")
 
@@ -75,79 +75,80 @@ class concession_form : AppCompatActivity() {
         auth = Firebase.auth
 
         val currentUser = auth.currentUser
+        val userId = currentUser?.uid
 
         var auth: FirebaseAuth = Firebase.auth
         val email = auth.currentUser?.email
         val clgId = email?.substring(0,11)?.uppercase(Locale.ROOT)
 
-        val timeForRetrieve = ArrayList<String>()
-
-        firebaseConfig.userRef.child("$clgId/CLIST").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (snapshot in snapshot.children) {
-                        val key = snapshot.key
-                        if (key != null) {
-                            timeForRetrieve.add(key)
-//                            Toast.makeText(this@concession_form, key, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-
-                    // Get the last element from the list
-                    val lastTime = timeForRetrieve.lastOrNull()
-
-                    if (lastTime != null) {
-                        firebaseConfig.userRef.child("$clgId/CLIST/$lastTime").addValueEventListener(object : ValueEventListener {
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                if (snapshot.exists()) {
-                                    val fbVoucherNo = snapshot.child("voucherNo").value.toString()
-                                    val editableVoucherNo = Editable.Factory.getInstance().newEditable(fbVoucherNo)
-
-                                    val fbClass = snapshot.child("concession_class").value.toString()
-
-                                    when(fbClass){
-                                        "l"->binding.rgClass.check(R.id.rgValI)
-                                        else -> binding.rgClass.check(R.id.rgValII)
-                                    }
-
-                                    val fbSource = snapshot.child("source").value.toString()
-                                    val indexSource = resources.getStringArray(R.array.source)
-
-                                    binding.spinnerSource.setSelection(indexSource.indexOf(fbSource))
-
-                                    val fbDestination = snapshot.child("destination").value.toString()
-                                    val indexDestination = resources.getStringArray(R.array.destination)
-
-                                    binding.spinnerDestination.setSelection(indexDestination.indexOf(fbDestination))
-
-                                    val fbConPeriod = snapshot.child("concessionPeriod").value.toString()
-                                    val indexConcPeriod = resources.getStringArray(R.array.concessionPeriod)
-
-                                    binding.spinnerConcessionPeriod.setSelection(indexConcPeriod.indexOf(fbConPeriod))
-
-                                    binding.etVoucherNo.text = editableVoucherNo
-
-                                    etAppliedDate.isEnabled = false
-                                }
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                // Handle the error
-                            }
-                        })
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@concession_form, "Cannot get key", Toast.LENGTH_SHORT).show()
-            }
-        })
+//        val timeForRetrieve = ArrayList<String>()
+//
+//        firebaseConfig.userRef.child("$clgId/CLIST").addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    for (snapshot in snapshot.children) {
+//                        val key = snapshot.key
+//                        if (key != null) {
+//                            timeForRetrieve.add(key)
+////                            Toast.makeText(this@concession_form, key, Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//
+//                    // Get the last element from the list
+//                    val lastTime = timeForRetrieve.lastOrNull()
+//
+//                    if (lastTime != null) {
+//                        firebaseConfig.userRef.child("$clgId/CLIST/$lastTime").addValueEventListener(object : ValueEventListener {
+//                            override fun onDataChange(snapshot: DataSnapshot) {
+//                                if (snapshot.exists()) {
+//                                    val fbVoucherNo = snapshot.child("voucherNo").value.toString()
+//                                    val editableVoucherNo = Editable.Factory.getInstance().newEditable(fbVoucherNo)
+//
+//                                    val fbClass = snapshot.child("concession_class").value.toString()
+//
+//                                    when(fbClass){
+//                                        "l"->binding.rgClass.check(R.id.rgValI)
+//                                        else -> binding.rgClass.check(R.id.rgValII)
+//                                    }
+//
+//                                    val fbSource = snapshot.child("source").value.toString()
+//                                    val indexSource = resources.getStringArray(R.array.source)
+//
+//                                    binding.spinnerSource.setSelection(indexSource.indexOf(fbSource))
+//
+//                                    val fbDestination = snapshot.child("destination").value.toString()
+//                                    val indexDestination = resources.getStringArray(R.array.destination)
+//
+//                                    binding.spinnerDestination.setSelection(indexDestination.indexOf(fbDestination))
+//
+//                                    val fbConPeriod = snapshot.child("concessionPeriod").value.toString()
+//                                    val indexConcPeriod = resources.getStringArray(R.array.concessionPeriod)
+//
+//                                    binding.spinnerConcessionPeriod.setSelection(indexConcPeriod.indexOf(fbConPeriod))
+//
+//                                    binding.etVoucherNo.text = editableVoucherNo
+//
+//                                    etAppliedDate.isEnabled = false
+//                                }
+//                            }
+//
+//                            override fun onCancelled(error: DatabaseError) {
+//                                // Handle the error
+//                            }
+//                        })
+//                    }
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                Toast.makeText(this@concession_form, "Cannot get key", Toast.LENGTH_SHORT).show()
+//            }
+//        })
 
 
 //        etAppliedDate.text = Date
         btnSubmit.setOnClickListener {
-            val userId = currentUser?.uid
+//            val userId = currentUser?.uid
             val voucherNo: String = etVoucherNo.text.toString()
             val trainClass : RadioGroup = binding.rgClass
 
@@ -162,7 +163,7 @@ class concession_form : AppCompatActivity() {
                 val rgCheckedValue = findViewById<RadioButton>(checkedClassButton)
                 val etclass = rgCheckedValue.text.toString()
                 val users = userConccessionDetails(
-                    userId = userId,voucherNo=voucherNo, concessionClass = etclass , concessionPeriod = concessionPeriod , appliedDate= appliedDate, source = source, destination = destination,status = "Pending"
+                    userId = userId,voucherNo=voucherNo, concessionClass = etclass , concessionPeriod = concessionPeriod , appliedDate= appliedDate, source = source, destination = destination
                 )
                 clgId?.let { it1 ->
                     firebaseConfig.createNewUserCListRef(it1).setValue(users)

@@ -65,6 +65,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import java.util.Locale
@@ -366,50 +367,67 @@ fun ConcessionListItem(
                             val email = auth.currentUser?.email
                             val clgId = email?.substring(0, 11)?.uppercase(Locale.ROOT)
 
-                            val timeForRetrieve = ArrayList<String>()
+                            val feild= "voucherNo"
+                            val value = "${item.voucherNo}"
 
-                            firebaseConfig.userRef.child("$clgId/CLIST")
-                                .addValueEventListener(object : ValueEventListener {
-                                    @RequiresApi(Build.VERSION_CODES.O)
-                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                        if (snapshot.exists()) {
-                                            for (snapshot in snapshot.children) {
-                                                val key = snapshot.key
-                                                if (key != null) {
-                                                    timeForRetrieve.add(key)
-//                            Toast.makeText(this@concession_form, key, Toast.LENGTH_SHORT).show()
-                                                }
-                                            }
+                            val query:Query = firebaseConfig.userRef.child("${clgId}/CLIST").orderByChild(feild).equalTo(value)
 
-                                            // Get the last element from the list
-                                            val lastTime = timeForRetrieve.lastOrNull()
-
-                                            firebaseConfig.userRef.child("$clgId/CLIST")
-                                                .addValueEventListener(object :
-                                                    ValueEventListener {
-                                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                                        if (snapshot.exists()) {
-                                                            firebaseConfig.userRef.child("$clgId/CLIST").child("$lastTime").removeValue()
-                                                                .addOnSuccessListener {
-
-                                                                }
-                                                                .addOnFailureListener {
-
-                                                                }
-                                                        }
-                                                    }
-
-                                                    override fun onCancelled(error: DatabaseError) {
-                                                        // Handle the error
-                                                    }
-                                                })
-                                        }
+                            query.addValueEventListener(object :ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    for(dataSnapshot in snapshot.children){
+                                        dataSnapshot.ref.removeValue()
                                     }
+                                }
 
-                                    override fun onCancelled(error: DatabaseError) {
-//                                    Toast.makeText(requireContext(), "Cannot get key", Toast.LENGTH_SHORT).show()
-                                    }
-                                })
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
+
+//                            val timeForRetrieve = ArrayList<String>()
+//
+//                            firebaseConfig.userRef.child("$clgId/CLIST")
+//                                .addValueEventListener(object : ValueEventListener {
+//                                    @RequiresApi(Build.VERSION_CODES.O)
+//                                    override fun onDataChange(snapshot: DataSnapshot) {
+//                                        if (snapshot.exists()) {
+//                                            for (snapshot in snapshot.children) {
+//                                                val key = snapshot.key
+//                                                if (key != null) {
+//                                                    timeForRetrieve.add(key)
+////                            Toast.makeText(this@concession_form, key, Toast.LENGTH_SHORT).show()
+//                                                }
+//                                            }
+//
+//                                            // Get the last element from the list
+//                                            val lastTime = timeForRetrieve.lastOrNull()
+//
+//                                            firebaseConfig.userRef.child("$clgId/CLIST")
+//                                                .addValueEventListener(object :
+//                                                    ValueEventListener {
+//                                                    override fun onDataChange(snapshot: DataSnapshot) {
+//                                                        if (snapshot.exists()) {
+//                                                            firebaseConfig.userRef.child("$clgId/CLIST").removeValue()
+//                                                                .addOnSuccessListener {
+//
+//                                                                }
+//                                                                .addOnFailureListener {
+//
+//                                                                }
+//                                                        }
+//                                                    }
+//
+//                                                    override fun onCancelled(error: DatabaseError) {
+//                                                        // Handle the error
+//                                                    }
+//                                                })
+//                                        }
+//                                    }
+//
+//                                    override fun onCancelled(error: DatabaseError) {
+////                                    Toast.makeText(requireContext(), "Cannot get key", Toast.LENGTH_SHORT).show()
+//                                    }
+//                                })
 
                             showDeleteDialog = false
                         }
